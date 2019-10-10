@@ -5,23 +5,21 @@
 function isBalanced(root) {
   if (!root) return true;
 
-  function isBalancedDfs(root) {
-    if (!root) return -1;
+  let heightDiff = Math.abs(calcHeight(root.left) - calcHeight(root.right)) <= 1
 
-    let left = isBalancedDfs(root.left) + 1
-    let right = isBalancedDfs(root.right) + 1
+  return heightDiff && isBalanced(root.left) && isBalanced(root.right)
 
-    if (Math.abs(left - right) > 1) {
-      return false
-    }
-
-    return Math.max(left, right)
-
-  }
-
-  let balanced = isBalancedDfs(root);
-  return (!!balanced)
 }
 
+function calcHeight(root) {
+  if (!root) return -1;
+
+  return 1 + calcHeight(root.left) + calcHeight(root.right)
+}
+
+/*
 1. Return height from subtrees and compare, if greater than 1, return false
 2. Use DFS/recursion to derive height
+------
+1. Check height balance of current Node, and also check left and right Node
+*/
